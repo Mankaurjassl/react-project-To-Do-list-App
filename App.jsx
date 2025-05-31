@@ -1,43 +1,51 @@
-// import Hello from './components/Hello'
-// import Bye from './components/Bye'
-// import Testing from './components/Testing'
-// import Props from './components/Props'
-// import Array_props from './components/Array_props'
+import React, { useState } from 'react';
 
-// import Object_render from './components/Object_render'
+function TO_do_app() {
+  const [task, setTask] = useState("");
+  const [taskList, setTaskList] = useState([]);
 
-// import Event_handler from './components/Event_handler'
-// import UseState_inc_de from './components/UseState_inc_dec'
-// import Form from "./components/Form"
+  const handleAddTask = () => {
+    if (task.trim() !== "") {
+      setTaskList([...taskList, task]);
+      setTask(""); 
+    }
+  };
 
-import TO_do_app from './components/TO_do_app'
+  const handleDelete = (index) => {
+    const newList = taskList.filter((_, i) => i !== index);
+    setTaskList(newList);
+  };
 
-function App() {
   return (
-    <>
-     <TO_do_app/>
-    {/* <Form/>*/}
-    
-      {/* <Hello />
-      <Bye />
-      <Testing />
-      <Props name="manpreet" phone="1234567890" /> */} 
+    <main>
+      <div className="main-container">
+        <h1>To Do List</h1>
 
-       {/* <Array_props/> */}
+        <div className="input-button">
+          <input
+            type="text"
+            placeholder="Enter a Task"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <button onClick={handleAddTask}>+</button>
+        </div>
 
-
-    {/* <Object_render/> */}
-  
-
- { /*<Event_handler/> */}
-      
-      {/* <UseState_inc_de/> */}
-
-         
-      
-
-    </>
-  )
+        <div className="task">
+          {taskList.map((item, index) => (
+            <div className="todo" key={index}>
+              <p>{item}</p>
+              <div className="actions-btn">
+                <input type="checkbox" />
+                <button onClick={() => handleDelete(index)}>Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
 }
 
-export default App
+export default TO_do_app;
+    
